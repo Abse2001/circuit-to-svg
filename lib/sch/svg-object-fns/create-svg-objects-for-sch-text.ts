@@ -17,15 +17,31 @@ export const createSvgSchText = ({
   const center = applyToPoint(transform, elm.position)
 
   const textAnchorMap: Record<typeof elm.anchor, string> = {
+    top_left: "start",
+    top_center: "middle",
+    top_right: "end",
+    center_left: "start",
     center: "middle",
+    center_right: "end",
+    bottom_left: "start",
+    bottom_center: "middle",
+    bottom_right: "end",
     left: "start",
     right: "end",
     top: "middle",
     bottom: "middle",
   }
 
-  const dominantBaselineMap: Record<typeof elm.anchor, string> = {
+  const dominantBaselineMap: Record<SchematicText["anchor"], string> = {
+    top_left: "ideographic",
+    top_center: "ideographic",
+    top_right: "ideographic",
+    center_left: "middle",
     center: "middle",
+    center_right: "middle",
+    bottom_left: "ideographic",
+    bottom_center: "ideographic",
+    bottom_right: "ideographic",
     left: "middle",
     right: "middle",
     top: "hanging",
@@ -43,7 +59,7 @@ export const createSvgSchText = ({
       "text-anchor": textAnchorMap[elm.anchor],
       "dominant-baseline": dominantBaselineMap[elm.anchor],
       "font-family": "sans-serif",
-      "font-size": `${getSchScreenFontSize(transform, "reference_designator")}px`,
+      "font-size": `${getSchScreenFontSize(transform, "reference_designator", elm.font_size)}px`,
       transform: `rotate(${elm.rotation}, ${center.x}, ${center.y})`,
     },
     children: [
